@@ -4,7 +4,7 @@ import numpy as np
 import joblib, json, os
 from src.features import extract_features, FEATURE_NAMES
 from src.train import train_model  # corrected import if file is train_model.py
-from sklearn.linear_model import LogisticRegression
+from sklearn.ensemble import RandomForestClassifier
 
 st.set_page_config(page_title="Human-or-AI Detector", layout="centered")
 st.title("🤖 Human-or-AI Probability App")
@@ -76,7 +76,7 @@ if st.button("Analyze") and txt.strip():
             base = model.estimators_[0]
 
         # If base is LogisticRegression, get coefficients directly
-        if isinstance(base, LogisticRegression):
+        if isinstance(base, RandomForestClassifier):
             coef = base.coef_[0]
         # If base has its own estimators (e.g., calibration with cv>1)
         elif hasattr(base, "estimators_") and len(base.estimators_) > 0:
